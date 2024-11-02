@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String to Unicode Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 300px;
+            text-align: center;
+        }
+        input, textarea, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+        }
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>String to Unicode Converter</h2>
+        <textarea id="stringInput" rows="4" placeholder="Enter string"></textarea>
+        <button onclick="convertStringToUnicode()">Convert to Unicode</button>
+        <textarea id="unicodeOutput" rows="4" placeholder="Unicode sequence will appear here" readonly></textarea>
+        <button onclick="copyUnicode()">Copy</button>
+        <button onclick="resetFields()">Reset</button>
+    </div>
+
+    <script>
+        function convertStringToUnicode() {
+            const stringInput = document.getElementById('stringInput').value;
+            let unicodeStr = '';
+            for (let i = 0; i < stringInput.length; i++) {
+                unicodeStr += '\\u' + stringInput.charCodeAt(i).toString(16).padStart(4, '0');
+            }
+            document.getElementById('unicodeOutput').value = unicodeStr;
+        }
+
+        function copyUnicode() {
+            const unicodeOutput = document.getElementById('unicodeOutput');
+            unicodeOutput.select();
+            unicodeOutput.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand('copy');
+            alert("Unicode sequence copied to clipboard!");
+        }
+
+        function resetFields() {
+            document.getElementById('stringInput').value = '';
+            document.getElementById('unicodeOutput').value = '';
+        }
+    </script>
+</body>
+</html>
